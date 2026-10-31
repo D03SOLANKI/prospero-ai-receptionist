@@ -48,7 +48,7 @@ export const DoctorOverview: React.FC<DoctorOverviewProps> = ({
       </div>
 
       {/* Grid of Doctor / Specialty Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl">
         {doctors.map((doc) => {
           const occupancy = doc.occupancy_percentage || 0;
           const booked = doc.booked_slots_today || 0;
