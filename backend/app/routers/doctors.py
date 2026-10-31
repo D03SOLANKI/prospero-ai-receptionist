@@ -97,3 +97,20 @@ def get_doctor_slots_for_date(
         "date": date,
         "slots": slots_details
     }
+
+@router.delete("/cleanup-extras")
+async def cleanup_extra_doctors(db: Session = Depends(get_db)):
+    """Removes the extra doctor tracks, keeping ONLY the main Dr. Himanshu Oberoi."""
+    extra_docs = db.query(Doctor).filter(Doctor.name != "Dr. Himanshu Oberoi").all()
+    deleted_names = []
+    for d in extra_docs:
+        deleted_names.append(d.name)
+        db.delete(d)
+    db.commit()
+    from app.websocket_manager import realtime_manager
+    await realtime_manager.broadcast("doctors:updated", {})
+    return {
+        "status": "success",
+        "deleted_doctors": deleted_names,
+        "remaining_doctors": [doc.name for doc in db.query(Doctor).all()]
+    }
