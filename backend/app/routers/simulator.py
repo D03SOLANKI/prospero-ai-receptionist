@@ -13,6 +13,14 @@ router = APIRouter(prefix="/api/v1/simulator", tags=["Sarvam Voice Receptionist 
 
 SIMULATED_PATIENTS = [
     {
+        "name": "Bhavik Shah",
+        "phone": "+91 98250 33445",
+        "reason": "Dental implant and ceramic crown consultation",
+        "lang": "gu",
+        "patient_line": "Namaste Neha ben, mane daant ma implant karavvu chhe. Dr. Himanshu Oberoi no appointment mali shake?",
+        "confirm_line": "Haan, please book kari do. Maru naam Bhavik Shah chhe."
+    },
+    {
         "name": "Devansh Trivedi",
         "phone": "+91 98791 22334",
         "reason": "Severe lower molar pain - Root canal consultation with Dr. Himanshu",
@@ -132,6 +140,34 @@ async def simulate_sarvam_call(
             {
                 "speaker": "agent",
                 "text": f"Dhanyavadagalu! Nimma appointment {today_str} dina {time_display} ge Dr. Himanshu Oberoi jothe yashasviyagi book aagide. Prospero Dental Clinic ge swagatha!",
+                "timestamp": "00:32"
+            }
+        ]
+    elif patient["lang"] == "gu":
+        simulated_transcript = [
+            {
+                "speaker": "agent",
+                "text": "Namaste! Prospero Dental Clinic thi Neha bolu chhu. Hu tamari shu madad kari shaku?",
+                "timestamp": "00:02"
+            },
+            {
+                "speaker": "patient",
+                "text": patient["patient_line"],
+                "timestamp": "00:09"
+            },
+            {
+                "speaker": "agent",
+                "text": f"Dr. Himanshu Oberoi aaje {time_display} par available chhe. Shu hu tamaru appointment book kari dau?",
+                "timestamp": "00:17"
+            },
+            {
+                "speaker": "patient",
+                "text": patient["confirm_line"],
+                "timestamp": "00:23"
+            },
+            {
+                "speaker": "agent",
+                "text": f"Aabhar Bhavik bhai! Tamaru appointment {today_str} na roje {time_display} par Dr. Himanshu Oberoi sathe confirm thai gayu chhe. Prospero Dental Clinic ma tamaru swagat chhe!",
                 "timestamp": "00:32"
             }
         ]
