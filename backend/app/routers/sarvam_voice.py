@@ -67,9 +67,9 @@ def parse_date_flexible(date_str: Optional[str]) -> str:
     if not date_str or not str(date_str).strip():
         return get_ist_today_str()
     cleaned = str(date_str).strip().lower()
-    if cleaned in ["today", "aaj", "current", "todays", "ivattu", "ee dina"]:
+    if cleaned in ["today", "aaj", "current", "todays", "ivattu", "ee dina", "aaje"]:
         return get_ist_today_str()
-    if cleaned in ["tomorrow", "kal", "next day", "naale"]:
+    if cleaned in ["tomorrow", "kal", "next day", "naale", "kaale", "kale"]:
         return (get_ist_now() + timedelta(days=1)).strftime("%Y-%m-%d")
     try:
         dt = date_parser.parse(cleaned)
