@@ -18,7 +18,7 @@ export const SarvamIntegrationHub: React.FC<SarvamIntegrationHubProps> = ({
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
   const [selectedDoctorId, setSelectedDoctorId] = useState<string>('');
 
-  const TUNNEL_BASE = 'https://collections-lawn-become-perform.trycloudflare.com';
+  const LIVE_BASE = (process.env.NEXT_PUBLIC_API_URL || 'https://prospero-ai-receptionist.onrender.com/api/v1').replace(/\/api\/v1\/?$/, '');
 
   const copyToClipboard = (text: string, index: number) => {
     navigator.clipboard.writeText(text);
@@ -30,7 +30,7 @@ export const SarvamIntegrationHub: React.FC<SarvamIntegrationHubProps> = ({
     {
       title: 'Tool 1: check_availability (Mid-Call)',
       method: 'POST',
-      url: `${TUNNEL_BASE}/api/v1/voice/check-availability`,
+      url: `${LIVE_BASE}/api/v1/voice/check-availability`,
       section3: `Use the API response to tell the caller about available appointment slots.
 
 If "is_available" is true:
@@ -45,7 +45,7 @@ If "is_available" is false:
     {
       title: 'Tool 2: create_appointment (Mid-Call)',
       method: 'POST',
-      url: `${TUNNEL_BASE}/api/v1/voice/create-appointment`,
+      url: `${LIVE_BASE}/api/v1/voice/create-appointment`,
       section3: `Use the API response to determine whether the appointment was successfully booked.
 
 If "success" is true:
@@ -61,7 +61,7 @@ If "success" is false:
     {
       title: 'Post-Call Telephony Webhook (Audio & Transcripts)',
       method: 'POST',
-      url: `${TUNNEL_BASE}/api/v1/sarvam/webhook/call-ended`,
+      url: `${LIVE_BASE}/api/v1/sarvam/webhook/call-ended`,
       section3: `Sends full turn-by-turn conversation transcript, call_summary, duration_seconds, and recording_url to the dashboard.`,
       desc: "Automatically invoked by Sarvam when the call finishes. Ingests Neha's call transcript and audio recording."
     }
@@ -104,10 +104,10 @@ If "success" is false:
         <div className="flex items-center justify-between">
           <h3 className="text-sm font-bold text-slate-900 flex items-center space-x-2">
             <ShieldCheck className="w-4 h-4 text-teal-600" />
-            <span>Active Cloudflare Public Endpoints (Paste in Sarvam Samvaad)</span>
+            <span>Active Production Endpoints (Paste in Sarvam Samvaad)</span>
           </h3>
           <span className="text-xs text-emerald-600 font-semibold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-            Tunnel Active & Live
+            Render 24/7 Cloud Active
           </span>
         </div>
 
