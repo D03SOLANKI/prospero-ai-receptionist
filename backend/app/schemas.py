@@ -190,15 +190,25 @@ class SarvamVoiceActionResponse(BaseModel):
 
 # ----------------- Sarvam Post-Call Webhook Schema -----------------
 class SarvamCallEndedWebhookPayload(BaseModel):
-    call_id: str
-    caller_phone: str
-    duration_seconds: int
-    call_status: str = "COMPLETED"
+    call_id: Optional[str] = None
+    sarvam_call_id: Optional[str] = None
+    caller_phone: Optional[str] = None
+    caller: Optional[str] = None
+    phone: Optional[str] = None
+    duration_seconds: Optional[int] = 0
+    duration: Optional[int] = 0
+    call_status: Optional[str] = "COMPLETED"
     recording_url: Optional[str] = None
-    transcript: Optional[List[Dict[str, Any]]] = None
+    audio_url: Optional[str] = None
+    transcript: Optional[Any] = None
     ai_summary: Optional[str] = None
     call_summary: Optional[str] = None
+    summary: Optional[str] = None
     sentiment: Optional[str] = "Positive"
+    appointment_id: Optional[str] = None
+
+    class Config:
+        extra = "allow"
 
 # ----------------- Dashboard & Calendar Schemas -----------------
 class CalendarEventResponse(BaseModel):
